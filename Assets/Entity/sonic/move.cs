@@ -5,30 +5,39 @@ using Utils;
 
 public class move : MonoBehaviour
 {
-    int direction =1;
     float xPosition = 0;
-    bool isMoving = true;
+    float yPosition = 0;
     void Start()
     {
-        Utils.InputHandler.bind(KeyCode.Space,"Space");
-        Utils.InputHandler.bind(KeyCode.W,"W");
+        Utils.InputHandler.bind(KeyCode.A,KeyCode.JoystickButton3,"Left");
+        Utils.InputHandler.bind(KeyCode.D,KeyCode.JoystickButton2,"Right");
+        Utils.InputHandler.bind(KeyCode.W,KeyCode.JoystickButton2,"Up");
+        Utils.InputHandler.bind(KeyCode.S,KeyCode.JoystickButton2,"Down");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Utils.InputHandler.Update(); // вызов update для InputHanlder
-        if (isMoving)
-        {
-            xPosition += 0.05f * direction;
-            this.transform.position = new Vector3(xPosition,0,-5);
-            if(xPosition <= -10 || xPosition >= 10){
-                direction *= -1;
-            }
+        if(Utils.InputHandler.down("Left")){
+            xPosition += 5f * -1 * Time.deltaTime;
+            this.transform.position = new Vector3(xPosition,yPosition,-5);
+        } 
+        if(Utils.InputHandler.down("Right")){
+            xPosition += 5f * 1 * Time.deltaTime;
+            this.transform.position = new Vector3(xPosition,yPosition,-5);
+        }
+        if(Utils.InputHandler.down("Up")){
+            yPosition += 5f * 1 * Time.deltaTime;
+            this.transform.position = new Vector3(xPosition,yPosition,-5);
+        }
+        if(Utils.InputHandler.down("Down")){
+            yPosition += 5f * -1 * Time.deltaTime;
+            this.transform.position = new Vector3(xPosition,yPosition,-5);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)){
+        /*if(Input.GetKeyDown(KeyCode.Space)){
             isMoving = !isMoving;
-        }
+        }*/
+
     }
 }
