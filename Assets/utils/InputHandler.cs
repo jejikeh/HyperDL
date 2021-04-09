@@ -6,7 +6,7 @@ namespace Utils{
     public class InputHandler : MonoBehaviour
     {
         public static List<bind> actions = new List<bind>(); // таблица только с классом bind
-        public static bool pressedButton = false;
+        //public static bool pressedButton = false;
 
         /*
             List - почти как таблица в lua, которая может хранить в себе обьекты одного и того же класса 
@@ -19,6 +19,7 @@ namespace Utils{
         }
 
         public static bool pressed(string actionName){
+            bool pressedButton = false;
             actions.ForEach(delegate(bind action){
                 if(action.actionName == actionName){
                     if(Input.GetKeyDown(action.key) || Input.GetKeyDown(action.gkey)){
@@ -33,6 +34,7 @@ namespace Utils{
         }
 
         public static bool down(string actionName){
+            bool pressedButton = false;
             actions.ForEach(delegate(bind action){
                 if(action.actionName == actionName){
                     if(Input.GetKey(action.key) || Input.GetKey(action.gkey)){
