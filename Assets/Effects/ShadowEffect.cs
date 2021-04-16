@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Effects {
     public class ShadowEffect : MonoBehaviour
     {
-        public Vector2 offset = new Vector2(-3,-3);
+        public Vector3 offset = new Vector3(-3,-3,-3);
         private SpriteRenderer sprRndCaster;
         private SpriteRenderer sprRndShadow;
 
@@ -30,8 +30,9 @@ namespace Effects {
         }
 
         void LateUpdate(){
-            transShadow.position = new Vector2(transCaster.position.x+ offset.x,
-                transCaster.position.y + offset.y);
+            transShadow.position = new Vector3(transCaster.position.x+ offset.x,
+                transCaster.position.y + offset.y,
+                transCaster.position.z + offset.z);
             sprRndShadow.sprite = sprRndCaster.sprite;
 
         }
