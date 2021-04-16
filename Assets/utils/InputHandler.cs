@@ -34,7 +34,7 @@ namespace Utils{
         }
 
         public static bool down(string actionName){
-            bool pressedButton = false;
+        bool pressedButton = false;
             actions.ForEach(delegate(bind action){
                 if(action.actionName == actionName){
                     if(Input.GetKey(action.key) || Input.GetKey(action.gkey)){
