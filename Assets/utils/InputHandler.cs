@@ -5,68 +5,63 @@ using UnityEngine;
 namespace Utils{
     public class InputHandler : MonoBehaviour
     {
-        public static List<bind> actions = new List<bind>(); // таблица только с классом bind
+        public static List<Bind> actions = new List<Bind>(); // таблица только с классом bind
         //public static bool pressedButton = false;
 
         /*
             List - почти как таблица в lua, которая может хранить в себе обьекты одного и того же класса 
         */
-        public static void bind(KeyCode key,KeyCode gkey,string actionName){ // при вызове функции bind()
+
+        public TetrisBlock _tetrisBlock;
+        public static void bind(KeyCode[] key,string actionName){ // при вызове функции bind()
             //создается обьект класса bind.
-            bind action = new bind(key,gkey,actionName);
+
+            Bind action = new Bind(key,actionName);
             // добавляется к таблице, как и в lua: table.insert
             actions.Add(action);
         }
 
-        public static bool pressed(string actionName){
-            bool pressedButton = false;
-            actions.ForEach(delegate(bind action){
+        void Start(){
+            CameraControll.setCameraTarget(transform,new Vector3(0,0,-20));// !!!!----
+
+            // Перевести в отдельный файл с настройкой игры
+
+            KeyCode[] actionMove = new KeyCode[] {KeyCode.D,KeyCode.RightArrow};
+            bind(actionMove,"Fuck");
+        }
+
+        void pressed(string actionName){
+            actions.ForEach(delegate(Bind action){
                 if(action.actionName == actionName){
-                    if(Input.GetKeyDown(action.key) || Input.GetKeyDown(action.gkey)){
-                        pressedButton = true;
-                        //return pressedButton;
-                    }else{
-                        pressedButton = false;
+                    for(int i=0; i < action.key.Length; i++){
+                        if(Input.GetKeyDown(action.key[i])){
+                            var func = action.actionName;
+                            _tetrisBlock.Run();
+                            //return pressedButton;
+                        }
                     }
                 }
             });
-            return pressedButton;
         }
 
-        public static bool down(string actionName){
-        bool pressedButton = false;
-            actions.ForEach(delegate(bind action){
-                if(action.actionName == actionName){
-                    if(Input.GetKey(action.key) || Input.GetKey(action.gkey)){
-                        pressedButton = true;
-                        //return pressedButton;
-                    }else{
-                        pressedButton = false;
-                    }
-                }
+        void Update(){
+            actions.ForEach(delegate(Bind action){
+                pressed(action.actionName);
             });
-            return pressedButton;
-        }
-
-        // Update is called once per frame
-        public static void Update()
-        {
-            /*
-            actions.ForEach(delegate(bind action){
-            if(Input.GetKeyDown(action.key)){
-                return;
-            }*/
         }
     }
 
-    public class bind{ // класс с обьектом bind  который требует key и actionName
-        public KeyCode key; // все переменные 
-        public KeyCode gkey;
+    public class Bind{ // класс с обьектом bind  который требует key и actionName
+        public KeyCode[] key; // все переменные
         public string actionName;
-        public bind(KeyCode key,KeyCode gkey,string actionName){ // конструктор с созданием класса
+        public Bind(KeyCode[] key,string actionName){ // конструктор с созданием класса
             this.key = key;
-            this.gkey = gkey;
             this.actionName = actionName;
         }
+    }
+
+
+    public class Swipe{
+
     }
 }

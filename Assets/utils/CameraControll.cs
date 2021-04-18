@@ -6,6 +6,7 @@ namespace Utils{
     public class CameraControll : MonoBehaviour
     {
         public static camera cam;
+
         [Range(0,10)]
         public float smooth;
         public static void setCameraTarget(Transform target,Vector3 offset){

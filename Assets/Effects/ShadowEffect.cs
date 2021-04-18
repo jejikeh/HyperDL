@@ -21,6 +21,7 @@ namespace Effects {
 
             sprRndCaster = GetComponent<SpriteRenderer>();
             sprRndShadow = transShadow.gameObject.AddComponent<SpriteRenderer>();
+            sprRndShadow.drawMode = sprRndCaster.drawMode;
 
             sprRndShadow.sortingLayerName = sprRndCaster.sortingLayerName;
             sprRndShadow.sortingOrder = sprRndCaster.sortingOrder - 1;
@@ -33,6 +34,7 @@ namespace Effects {
             transShadow.position = new Vector3(transCaster.position.x+ offset.x,
                 transCaster.position.y + offset.y,
                 transCaster.position.z + offset.z);
+            sprRndShadow.size = sprRndCaster.size;
             sprRndShadow.sprite = sprRndCaster.sprite;
 
         }
